@@ -10,10 +10,11 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 const users = sequelize.define('users', {
 	discordId: {
 		type: Sequelize.STRING,
-		unique: true,
+		unique: true
 	},
 	discordUsername: Sequelize.STRING,
-	osuId: Sequelize.STRING,
+	osuId: {type: Sequelize.STRING,
+	},
 });
 
 module.exports={

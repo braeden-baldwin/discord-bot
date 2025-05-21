@@ -13,7 +13,7 @@ module.exports = {
 		.setRequired(true)
     ),
 	async execute(interaction) {
-		const osuUserId = interaction.options.getString('userId');
+		const osuUserId = interaction.options.getString('user_id');
 
 		try {
 			const user = await users.create({
@@ -26,10 +26,10 @@ module.exports = {
 		}
 		catch (error) {
 			if (error.name === 'SequelizeUniqueConstraintError') {
-				await interaction.reply('That tag already exists.');
+				await interaction.reply('That user already exists, use a set command instead.');
 			}
 
-			await interaction.reply('Something went wrong with adding a tag.');
+			await interaction.reply('Something went wrong with adding a user.');
 		}
 	},
 };

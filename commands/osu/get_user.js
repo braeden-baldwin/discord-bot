@@ -7,22 +7,15 @@ module.exports={
     data:
     new SlashCommandBuilder()
     .setName("get_user")
-    .setDescription("Returns information on the user")
-    .addStringOption(option =>
-        option.setName("user_id")
-        .setDescription("The osu! user ID")
-		.setRequired(true)
-    ),
+    .setDescription("Returns information on the user"),
     async execute(interaction){
-        const osuUserID = interaction.options.getString("user_id");
-        const user = await users.findOne({ where: { osuId: osuUserID } });
+        const user = interaction.user.id;
+        const userData = await users.findOne({where:{discordId:user}}); 
+        if (userData){
+            await interaction.reply(`Your osu ID is ${userData.get("osuId")}.`)
+        }
 
-        if (user){
-            await interaction.reply(`That osuID is attached to ${user.get("discord")}`);
-        }
-        else{
-            await interaction.reply("That osuID was not found in the database");
-        }
+        
 
     }
 }
