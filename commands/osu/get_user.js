@@ -14,8 +14,8 @@ module.exports={
         if (userData){
             await interaction.reply(`Your osu ID is ${userData.get("osuId")}.`)
         }
-
-        
-
+        else{
+            await interaction.reply("Your discord ID does not exist, use add_user.")
+        }
     }
 }
