@@ -12,18 +12,23 @@ module.exports={
     async execute(interaction){
         const user = interaction.user.id;
         const userData = await users.findOne({where:{discordId:user}}); 
-        const osuID = userData.get("osuId");
+        if (userData){
+            const osuID = userData.get("osuId");
 
-        let top_play = await osuAPI.getUserBestScores({
-            u:osuID
-        });
+            let top_play = await osuAPI.getUserBestScores({
+                u:osuID
+            });
 
-        let beatmap = top_play[0]["beatmap_id"];
+            let beatmap = top_play[0]["beatmap_id"];
         
-        let top_map = await osuAPI.getBeatmaps({
-            b:beatmap
-        });
+            let top_map = await osuAPI.getBeatmaps({
+                b:beatmap
+            });
 
-        await interaction.reply(`Your top play is worth ${top_play[0]["pp"]} on ${top_map[0]["title"]}`);
+            await interaction.reply(`Your top play is worth ${top_play[0]["pp"]} on ${top_map[0]["title"]}`);
+        }
+        else{
+            interaction.reply("Your ID does not exist, use add_user.")
+        }
     }
 }
